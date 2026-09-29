@@ -60,3 +60,30 @@ export function createSubmission(tool_code, offset_um) {
     body: JSON.stringify({ tool_code, offset_um: Number(offset_um) }),
   });
 }
+
+export function fetchTickets(status) {
+  const qs = status ? `?status=${encodeURIComponent(status)}` : "";
+  return request(`/tickets${qs}`);
+}
+
+export function fetchVoidedTickets() {
+  return request("/tickets/voided");
+}
+
+export function issueTicket() {
+  return request("/tickets/issue", { method: "POST" });
+}
+
+export function redeemTicket(ticketId, tool_code, offset_um) {
+  return request(`/tickets/${ticketId}/redeem`, {
+    method: "POST",
+    body: JSON.stringify({ tool_code, offset_um: Number(offset_um) }),
+  });
+}
+
+export function voidTicket(ticketId, reason) {
+  return request(`/tickets/${ticketId}/void`, {
+    method: "POST",
+    body: JSON.stringify({ reason: reason || "" }),
+  });
+}
