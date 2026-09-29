@@ -54,9 +54,21 @@ export function fetchSubmission(id) {
   return request(`/submissions/${id}`);
 }
 
-export function createSubmission(tool_code, offset_um) {
+export function createSubmission(ticket_code, tool_code, offset_um) {
   return request("/submissions", {
     method: "POST",
-    body: JSON.stringify({ tool_code, offset_um: Number(offset_um) }),
+    body: JSON.stringify({ ticket_code, tool_code, offset_um: Number(offset_um) }),
   });
+}
+
+export function fetchTodayTickets() {
+  return request("/tickets/today");
+}
+
+export function fetchVoidedTickets() {
+  return request("/tickets/voided");
+}
+
+export function distributeTickets() {
+  return request("/tickets/distribute", { method: "POST" });
 }
